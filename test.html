@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>101 Tools - System Test</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 { color: #1a1a2e; }
+        .test-section {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .status {
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: inline-block;
+            font-weight: bold;
+        }
+        .pass { background: #2ecc71; color: white; }
+        .fail { background: #e74c3c; color: white; }
+        .pending { background: #f39c12; color: white; }
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .utility-test {
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            border-left: 4px solid #0088cc;
+        }
+        .utility-test.error {
+            border-left-color: #e74c3c;
+            background: #ffebee;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-card h3 { margin: 0; font-size: 2em; }
+        .stat-card p { margin: 5px 0 0; opacity: 0.9; }
+    </style>
+</head>
+<body>
+    <h1>🧪 101 Tools System Test</h1>
+
+    <div class="test-section">
+        <h2>System Overview</h2>
+        <div class="stats">
+            <div class="stat-card">
+                <h3 id="total-utilities">0</h3>
+                <p>Total Utilities</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="files-loaded">0</h3>
+                <p>Files Loaded</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="storage-used">0KB</h3>
+                <p>Storage Used</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="categories">0</h3>
+                <p>Categories</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Core Systems</h2>
+        <div id="core-tests"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Utility Registration</h2>
+        <div id="utility-tests" class="test-grid"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Features</h2>
+        <div id="feature-tests"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test Results</h2>
+        <pre id="test-results"></pre>
+    </div>
+
+    <!-- Load all required scripts -->
+    <script src="core.js"></script>
+    <script src="utilities.js"></script>
+    <script src="utility-implementations.js"></script>
+    <script src="utility-implementations-extended.js"></script>
+    <script src="utility-implementations-2.js"></script>
+    <script src="utility-implementations-3.js"></script>
+    <script src="utility-implementations-4.js"></script>
+    <script src="utility-implementations-5.js"></script>
+    <script src="utility-implementations-final.js"></script>
+    <script src="utility-implementations-complete-1.js"></script>
+    <script src="utility-implementations-complete-2.js"></script>
+    <script src="utility-implementations-complete-final.js"></script>
+    <script src="utility-implementations-enhanced.js"></script>
+    <script src="utility-implementations-ultimate.js"></script>
+    <script src="app.js"></script>
+
+    <script>
+        // Test suite
+        const TestSuite = {
+            results: [],
+
+            async runTests() {
+                console.log('Starting comprehensive system tests...');
+
+                // Test 1: Core systems
+                this.testCoreSystem();
+
+                // Test 2: Utilities
+                this.testUtilities();
+
+                // Test 3: Features
+                this.testFeatures();
+
+                // Test 4: Storage
+                this.testStorage();
+
+                // Display results
+                this.displayResults();
+            },
+
+            testCoreSystem() {
+                const coreTests = document.getElementById('core-tests');
+                const tests = [
+                    { name: 'Core Module', status: typeof Core !== 'undefined' },
+                    { name: 'Utilities Registry', status: typeof Utilities !== 'undefined' },
+                    { name: 'Router', status: Core && Core.Router },
+                    { name: 'Storage', status: Core && Core.Storage },
+                    { name: 'State Manager', status: Core && Core.State },
+                    { name: 'Event Bus', status: Core && Core.EventBus },
+                    { name: 'Service Worker', status: 'serviceWorker' in navigator }
+                ];
+
+                let html = '<ul>';
+                tests.forEach(test => {
+                    const status = test.status ? 'pass' : 'fail';
+                    html += `<li>${test.name}: <span class="status ${status}">${status.toUpperCase()}</span></li>`;
+                    this.results.push({ ...test, passed: test.status });
+                });
+                html += '</ul>';
+                coreTests.innerHTML = html;
+            },
+
+            testUtilities() {
+                const utilityTests = document.getElementById('utility-tests');
+                const totalUtilities = document.getElementById('total-utilities');
+
+                if (!Utilities || !Utilities.registry) {
+                    utilityTests.innerHTML = '<p class="status fail">Utilities not loaded!</p>';
+                    return;
+                }
+
+                totalUtilities.textContent = Utilities.registry.length;
+
+                // Count categories
+                const categories = new Set(Utilities.registry.map(u => u.category));
+                document.getElementById('categories').textContent = categories.size;
+
+                // Test each utility
+                let html = '';
+                let implementedCount = 0;
+
+                Utilities.registry.forEach(utility => {
+                    const hasImplementation = typeof window[this.getImplementationName(utility.id)] !== 'undefined';
+
+                    if (hasImplementation) implementedCount++;
+
+                    html += `
+                        <div class="utility-test ${hasImplementation ? '' : 'error'}">
+                            <strong>${utility.name}</strong><br>
+                            <small>${utility.id}</small><br>
+                            <span class="status ${hasImplementation ? 'pass' : 'fail'}">
+                                ${hasImplementation ? 'READY' : 'MISSING'}
+                            </span>
+                        </div>
+                    `;
+
+                    this.results.push({
+                        name: `Utility: ${utility.name}`,
+                        passed: hasImplementation
+                    });
+                });
+
+                utilityTests.innerHTML = html;
+
+                // Update stats
+                document.getElementById('total-utilities').textContent =
+                    `${implementedCount}/${Utilities.registry.length}`;
+            },
+
+            testFeatures() {
+                const featureTests = document.getElementById('feature-tests');
+                const features = [
+                    { name: 'Local Storage', test: () => {
+                        try {
+                            localStorage.setItem('test', '1');
+                            localStorage.removeItem('test');
+                            return true;
+                        } catch(e) {
+                            return false;
+                        }
+                    }},
+                    { name: 'Session Storage', test: () => {
+                        try {
+                            sessionStorage.setItem('test', '1');
+                            sessionStorage.removeItem('test');
+                            return true;
+                        } catch(e) {
+                            return false;
+                        }
+                    }},
+                    { name: 'Canvas API', test: () => !!document.createElement('canvas').getContext },
+                    { name: 'Web Audio', test: () => !!(window.AudioContext || window.webkitAudioContext) },
+                    { name: 'Notifications', test: () => 'Notification' in window },
+                    { name: 'Geolocation', test: () => 'geolocation' in navigator },
+                    { name: 'Clipboard API', test: () => navigator.clipboard !== undefined },
+                    { name: 'Share API', test: () => navigator.share !== undefined },
+                    { name: 'PWA Install', test: () => 'BeforeInstallPromptEvent' in window }
+                ];
+
+                let html = '<ul>';
+                features.forEach(feature => {
+                    const status = feature.test();
+                    const statusClass = status ? 'pass' : 'pending';
+                    const statusText = status ? 'AVAILABLE' : 'NOT AVAILABLE';
+
+                    html += `<li>${feature.name}: <span class="status ${statusClass}">${statusText}</span></li>`;
+
+                    this.results.push({
+                        name: `Feature: ${feature.name}`,
+                        passed: status
+                    });
+                });
+                html += '</ul>';
+                featureTests.innerHTML = html;
+            },
+
+            testStorage() {
+                // Calculate storage usage
+                let totalSize = 0;
+                for (let key in localStorage) {
+                    if (localStorage.hasOwnProperty(key)) {
+                        totalSize += localStorage[key].length + key.length;
+                    }
+                }
+
+                const sizeInKB = (totalSize / 1024).toFixed(2);
+                document.getElementById('storage-used').textContent = sizeInKB + 'KB';
+
+                // Count loaded files
+                const scripts = document.querySelectorAll('script[src]');
+                document.getElementById('files-loaded').textContent = scripts.length;
+            },
+
+            getImplementationName(id) {
+                // Convert kebab-case to PascalCase
+                return id.split('-').map(word =>
+                    word.charAt(0).toUpperCase() + word.slice(1)
+                ).join('');
+            },
+
+            displayResults() {
+                const resultsElement = document.getElementById('test-results');
+                const passed = this.results.filter(r => r.passed).length;
+                const failed = this.results.filter(r => !r.passed).length;
+                const total = this.results.length;
+
+                let summary = `TEST RESULTS SUMMARY
+==========================================
+Total Tests: ${total}
+Passed: ${passed} (${Math.round(passed/total*100)}%)
+Failed: ${failed} (${Math.round(failed/total*100)}%)
+==========================================
+
+`;
+
+                if (failed > 0) {
+                    summary += 'FAILED TESTS:\n';
+                    this.results.filter(r => !r.passed).forEach(r => {
+                        summary += `❌ ${r.name}\n`;
+                    });
+                } else {
+                    summary += '✅ ALL TESTS PASSED! The system is fully functional.\n';
+                }
+
+                resultsElement.textContent = summary;
+
+                // Console output
+                console.log('Test Results:', this.results);
+                console.log(`Summary: ${passed}/${total} tests passed`);
+            }
+        };
+
+        // Run tests when page loads
+        window.addEventListener('DOMContentLoaded', () => {
+            TestSuite.runTests();
+        });
+    </script>
+</body>
+</html>
