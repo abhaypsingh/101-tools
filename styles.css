@@ -93,6 +93,101 @@ body {
     transform: rotate(20deg);
 }
 
+/* Creator Links Styles */
+.creator-links {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.08) 100%);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(102, 126, 234, 0.15);
+    margin-top: -0.5rem;
+}
+
+.creator-link {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 0.75rem;
+    text-decoration: none;
+    border-radius: var(--radius);
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    flex: 1;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.creator-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.creator-link:hover::before {
+    opacity: 1;
+}
+
+.creator-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.creator-link svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.creator-link:hover svg {
+    transform: scale(1.15);
+}
+
+.linkedin-link {
+    background: linear-gradient(135deg, #0077B5 0%, #00A0DC 100%);
+    color: white;
+}
+
+.linkedin-link:hover {
+    background: linear-gradient(135deg, #005885 0%, #0077B5 100%);
+}
+
+.coffee-link {
+    background: linear-gradient(135deg, #FF813F 0%, #FFDD00 100%);
+    color: #2D1810;
+}
+
+.coffee-link:hover {
+    background: linear-gradient(135deg, #FF6B1A 0%, #FFC700 100%);
+}
+
+.creator-link span {
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+/* Hide text on very small screens */
+@media (max-width: 280px) {
+    .creator-link span {
+        display: none;
+    }
+    .creator-links {
+        padding: 0.5rem;
+    }
+    .creator-link {
+        padding: 0.5rem;
+    }
+}
+
 .search-input {
     width: 100%;
     padding: 0.75rem;
@@ -780,4 +875,125 @@ body {
     .utility-card {
         min-height: 60px;
     }
+}
+
+/* Floating Action Button for Mobile */
+.floating-creator-button {
+    display: none;
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 1000;
+}
+
+@media (max-width: 768px) {
+    .floating-creator-button {
+        display: block;
+    }
+
+    /* Hide sidebar creator links on mobile */
+    .sidebar .creator-links {
+        display: none;
+    }
+}
+
+.fab-main {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+}
+
+.fab-main:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+.fab-main:active {
+    transform: scale(0.95);
+}
+
+.fab-menu {
+    position: absolute;
+    bottom: 70px;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+.floating-creator-button.active .fab-menu {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.floating-creator-button.active .fab-main {
+    transform: rotate(45deg);
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+}
+
+.fab-item {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    transform: scale(0);
+    animation: fabItemIn 0.3s ease forwards;
+}
+
+.floating-creator-button.active .fab-item {
+    transform: scale(1);
+}
+
+.fab-item:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.fab-item:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+@keyframes fabItemIn {
+    from {
+        transform: scale(0) translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+.linkedin-fab {
+    background: linear-gradient(135deg, #0077B5 0%, #00A0DC 100%);
+}
+
+.coffee-fab {
+    background: linear-gradient(135deg, #FF813F 0%, #FFDD00 100%);
+}
+
+.coffee-fab svg {
+    fill: #2D1810;
+}
+
+.fab-item:hover {
+    transform: scale(1.15);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }

@@ -590,7 +590,45 @@ document.addEventListener('keydown', (e) => {
 
 // Initialize when DOM is ready
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => App.init());
+    document.addEventListener('DOMContentLoaded', () => {
+        App.init();
+
+        // Initialize floating action button
+        const fabButton = document.querySelector('.fab-main');
+        const fabContainer = document.querySelector('.floating-creator-button');
+
+        if (fabButton) {
+            fabButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                fabContainer.classList.toggle('active');
+            });
+
+            // Close FAB menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!fabContainer.contains(e.target)) {
+                    fabContainer.classList.remove('active');
+                }
+            });
+        }
+    });
 } else {
     App.init();
+
+    // Initialize floating action button
+    const fabButton = document.querySelector('.fab-main');
+    const fabContainer = document.querySelector('.floating-creator-button');
+
+    if (fabButton) {
+        fabButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            fabContainer.classList.toggle('active');
+        });
+
+        // Close FAB menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!fabContainer.contains(e.target)) {
+                fabContainer.classList.remove('active');
+            }
+        });
+    }
 }
