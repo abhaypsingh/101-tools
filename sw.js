@@ -1,25 +1,33 @@
 // Service Worker for 101 Tools
-const CACHE_NAME = '101tools-v2';
+const CACHE_NAME = '101tools-v3';
 const urlsToCache = [
-    '/',
-    '/index.html',
-    '/styles.css',
-    '/core.js',
-    '/utilities.js',
-    '/utility-implementations.js',
-    '/utility-implementations-extended.js',
-    '/utility-implementations-2.js',
-    '/utility-implementations-3.js',
-    '/utility-implementations-4.js',
-    '/utility-implementations-5.js',
-    '/utility-implementations-final.js',
-    '/utility-implementations-complete-1.js',
-    '/utility-implementations-complete-2.js',
-    '/utility-implementations-complete-final.js',
-    '/utility-implementations-enhanced.js',
-    '/utility-implementations-ultimate.js',
-    '/app.js',
-    '/manifest.json'
+    './',
+    './index.html',
+    './styles.css',
+    './core.js',
+    './utilities.js',
+    './utility-implementations.js',
+    './utility-implementations-extended.js',
+    './utility-implementations-2.js',
+    './utility-implementations-3.js',
+    './utility-implementations-4.js',
+    './utility-implementations-5.js',
+    './utility-implementations-final.js',
+    './utility-implementations-complete-1.js',
+    './utility-implementations-complete-2.js',
+    './utility-implementations-complete-final.js',
+    './utility-implementations-enhanced.js',
+    './utility-implementations-ultimate.js',
+    './tool-implementations-productivity.js',
+    './tool-implementations-wellness1.js',
+    './tool-implementations-wellness2.js',
+    './tool-implementations-mixed.js',
+    './tool-implementations-remaining1.js',
+    './tool-implementations-remaining2.js',
+    './icons.js',
+    './icons-extended.js',
+    './app.js',
+    './manifest.json'
 ];
 
 // Install event - cache all resources
